@@ -7,3 +7,16 @@ before_install:
 
 script:
   - docker run jamdahl/docker-test-cicd npm run test -- --coverage
+  
+deploy:
+  provider: elasticbeanstalk
+  region: "us-east-1"
+  app: "cicd-test"
+  env: "CicdTest-env"
+  bucket_name: "elasticbeanstalk-us-east-1-969975748920"
+  bucket_path: "cicd-test"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: "$AWS_SECRET_KEY"
